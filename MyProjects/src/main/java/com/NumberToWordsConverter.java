@@ -1,10 +1,12 @@
 package com;
+
 import java.text.NumberFormat;
 import java.util.Scanner;
 
 import exception.MyException;
 
 public class NumberToWordsConverter {
+
 	public static final String[] units = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
 			"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen",
 			"Nineteen" };
@@ -48,27 +50,46 @@ public class NumberToWordsConverter {
 		return convert(n / 10000000) + " Crore" + ((n % 10000000 != 0) ? " " : "") + convert(n % 10000000);
 	}
 
-	static void  validate(int toTest)throws MyException{  
-	     if(toTest < 0)  
-	      throw new MyException("Not A Valid Number");  
-	     else  
-	      System.out.println("Done!");  
-	   }  
-	
-	
-	public static void main(final String[] args) {
-		 try
-	        { 
-	            // Throw an object of user defined exception 
-			     int n;
-				Scanner s = new Scanner(System.in);
-				System.out.println("Enter a number to convert into word format");
-				n = s.nextInt();
-				System.out.println(NumberFormat.getInstance().format(n) + "='" + convert(n) + "'");
-				  validate(n); 
-				     
-				      }catch(Exception m){System.out.println("Exception occured: "+m);
+	static void validate(int input) throws MyException {
+		if (input < 0)
+			throw new MyException("Negative Number");
 	}
-}
-	
+
+	static void validateStr(String str) throws MyException {
+		if (str.matches("[a-zA-z0-9]*"))
+			
+			throw new MyException("Alphanumeric");
+
+	}
+
+	public static void main(final String[] args) {
+		
+			
+			int n;
+			
+			Scanner input = new Scanner(System.in);
+			System.out.println("Enter a number to convert into word format");
+
+			while (input.hasNextLine()) {
+				System.out.println("please enter an input");
+				try {
+				
+				if (input.hasNextInt()) {
+
+					n = input.nextInt();
+					validate(n);
+					System.out.println(NumberFormat.getInstance().format(n) + "='" + convert(n) + "'");
+				} else if (input.hasNext()) {
+					input.nextLine();
+					String str = input.nextLine();
+					validateStr(str);
+				
+				}
+
+			}
+			 catch (MyException m) {
+				System.out.println(m.getMessage());
+			}
+	}
+	}
 }
